@@ -1,0 +1,18 @@
+name: vchat
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11
+  - pip>=23.3
+  - pip:
+      - streamlit
+      - openai
+      - faiss-cpu
+      - python-dotenv
+      - pypdf
+      - langchain
+      - langchain-community
+      - tiktoken
+      - numpy
+      - pandas
