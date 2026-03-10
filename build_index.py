@@ -1,14 +1,29 @@
 from src.loaders import load_pdf
 from src.chunking import chunk_docs
 from src.embedding import embed_chunks
+from src.retrieval import build_faiss_index, save_metadata
 from src.utils import save_chunks_metadata
 import pickle
+import pandas as pd
 from pathlib import Path
 
 def main():
 
-    if Path("vectorstore/chunks_metadata.pkl").exists():
+    PATH = Path("vectorstore/chunks_metadata.pkl")
+
+    if PATH.exists():
+
         print("Embeddings already exist. Skipping embedding step.")
+
+        embedded_chunks = pd.read_pickle(PATH)
+
+        print("Building FAISS index...")
+        build_faiss_index(embedded_chunks)
+
+        print("Saving metadata...")
+        save_metadata(embedded_chunks)
+
+        print("Index build complete.")
         return None
     
     #embedding
