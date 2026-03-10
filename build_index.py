@@ -1,26 +1,26 @@
-from pathlib import Path
-from src.loaders import load_pdf
-from src.chunking import chunk_docs
-from src.embedding import embed_chunks
-from src.retrieval import build_faiss_index, save_metadata
+from src.embedding import embed_text
+from src.retrieval import load_faiss_index, load_metadata, search_index
+from src.prompting import build_prompt
+from src.llm import generate_answer
 
 
 def main():
-    documents = load_pdf("data/raw")
-    chunks = chunk_docs(documents, chunk_size=800, overlap=150)
+    index = load_faiss_index()
+    metadata = load_metadata()
 
-    print(f"Loaded {len(documents)} documents.")
-    print(f"Created {len(chunks)} chunks.")
+    query = "What is the difference between horizontal and vertical differenitation?"
+    query_embedding = embed_text(query)
 
-    embedded_chunks = embed_chunks(chunks)
+    retrieved = search_index(query_embedding, index, metadata, k=4)
 
-    print("Building FAISS index...")
-    build_faiss_index(embedded_chunks)
+    prompt = build_prompt(query, retrieved)
 
-    print("Saving metadata...")
-    save_metadata(embedded_chunks)
+    print("Generating answer...\n")
+    answer = generate_answer(prompt)
 
-    print("Done.")
+    print("=" * 70)
+    print("ANSWER:\n")
+    print(answer)
 
 
 if __name__ == "__main__":
