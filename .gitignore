@@ -6,4 +6,3 @@ __pycache__/
 vectorstore/
 *.pyc
 .DS_Store
-environment.yml
