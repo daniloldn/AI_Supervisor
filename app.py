@@ -10,6 +10,7 @@ st.set_page_config(page_title="AI Academic Supervisor")
 
 st.title("AI Industrial Economics Lecturer")
 st.write("A RAG system to learn more about Industrial Economics")
+st.write("Answers are only from pre-indexed material to ensure responses are grounded")
 
 
 @st.cache_resource
