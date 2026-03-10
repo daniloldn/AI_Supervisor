@@ -1,1 +1,8 @@
 .vscode/ 
+data/
+venv/
+__pycache__/
+.env
+.vectorstore/
+*.pyc
+.DS_Store
